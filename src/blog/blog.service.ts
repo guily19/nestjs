@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class BlogService {
   //He puesto aqui el objeto data para simplificar en tiempo pero los datos no irian aqui sino en otro servicio (Storage).
   // No he movido los datos de sitio dado que he llegado a 1 hora de development y no queria sonbrepasar el tiempo
+  // Faltaria testear todos los endpoints. No añadi unit test por falta de tiempo
   data = [
     {
       userId: 1,
@@ -30,8 +31,7 @@ export class BlogService {
     return this.data;
   }
   getPost(postId: number): object {
-    // TODO
-
+    // TODO Aqui uso la comparacion doble pero se tendria que usar la triple
     const returnPost = this.data.find((post) => post.id == postId);
     return returnPost;
   }
@@ -59,6 +59,7 @@ export class BlogService {
       string;
     },
   ): boolean {
+    // TODO: añadir una busqueda mas eficiente...
     for (let i = 0; i < this.data.length; ++i) {
       if (this.data[i].id == id) {
         this.data[i].userId = post.userId;
