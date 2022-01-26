@@ -70,4 +70,15 @@ export class BlogService {
     }
     return true;
   }
+
+  getDetailPostInformation(postId: number): object {
+    /* TODO: Con el postId se recuperaria el post en si, se leeria el userId i se pediria al sercicio users la informacion del usuario
+    // por otro lado se pediria al servicio de commentarios los comentarios en referencia al post.
+    // Se crearia un objeto final con toda la informacion i se enviaria al controller
+    Seguramente esta no es la manera mas limpia de acerlo ya que cada servicio tiene que enviar los datos que se le piden y no tiene que ser
+    responsabilidad del servicio Blog crear un nuevo objeto con la informacion total
+    
+    */
+    return {};
+  }
 }
