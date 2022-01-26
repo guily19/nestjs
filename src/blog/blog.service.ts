@@ -1,38 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { StorageService } from 'src/storage/storage.service';
 
 @Injectable()
 export class BlogService {
-  //He puesto aqui el objeto data para simplificar en tiempo pero los datos no irian aqui sino en otro servicio (Storage).
-  // No he movido los datos de sitio dado que he llegado a 1 hora de development y no queria sonbrepasar el tiempo
-  // Faltaria testear todos los endpoints. No añadi unit test por falta de tiempo
-  data = [
-    {
-      userId: 1,
-      id: 1,
-      title:
-        'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
-      body: 'quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto',
-    },
-    {
-      userId: 1,
-      id: 2,
-      title: 'qui est esse',
-      body: 'est rerum tempore vitae sequi sint nihil reprehenderit dolor beatae ea dolores neque fugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis qui aperiam non debitis possimus qui neque nisi nulla',
-    },
-    {
-      userId: 1,
-      id: 3,
-      title: 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
-      body: 'et iusto sed quo iure voluptatem occaecati omnis eligendi aut ad voluptatem doloribus vel accusantium quis pariatur molestiae porro eius odio et labore et velit aut',
-    },
-  ];
-
+  constructor(private storageService: StorageService) {}
   getAll(): Array<object> {
-    return this.data;
+    const data = this.storageService.getPosts();
+    return data;
   }
   getPost(postId: number): object {
     // TODO Aqui uso la comparacion doble pero se tendria que usar la triple
-    const returnPost = this.data.find((post) => post.id == postId);
+    const data = this.storageService.getPosts();
+    const returnPost = data.find((post) => post.id == postId);
     return returnPost;
   }
 
@@ -43,9 +22,11 @@ export class BlogService {
     body;
     string;
   }): boolean {
-    const newId = this.data.length + 1;
+    const data = this.storageService.getPosts();
+    const newId = data.length + 1;
     post.id = newId;
-    this.data.push(post);
+    data.push(post);
+    this.storageService.setPosts(data);
     return true;
   }
 
@@ -59,31 +40,16 @@ export class BlogService {
       string;
     },
   ): boolean {
-    // TODO: añadir una busqueda mas eficiente...
-    for (let i = 0; i < this.data.length; ++i) {
-      if (this.data[i].id == id) {
-        this.data[i].userId = post.userId;
-        this.data[i].title = post.title;
-        this.data[i].body = post.body;
+    const data = this.storageService.getPosts();
+    for (let i = 0; i < data.length; ++i) {
+      if (data[i].id == id) {
+        data[i].userId = post.userId;
+        data[i].title = post.title;
+        data[i].body = post.body;
         break;
       }
     }
+    this.storageService.setPosts(data);
     return true;
-  }
-
-  getDetailPostInformation(postId: number): object {
-    /* TODO: Con el postId se recuperaria el post en si, se leeria el userId i se pediria al sercicio users la informacion del usuario
-    // por otro lado se pediria al servicio de commentarios los comentarios en referencia al post.
-    // Se crearia un objeto final con toda la informacion i se enviaria al controller
-    Seguramente esta no es la manera mas limpia de acerlo ya que cada servicio tiene que enviar los datos que se le piden y no tiene que ser
-    responsabilidad del servicio Blog crear un nuevo objeto con la informacion total
-
-    Este mismo servicio padre reciviria las peticiones de blog, i pediria a los sercicios correspondientes:
-     el usuario existe? si es asi enviaria el post al servicio post para que lo tratara, si no devolveria error o pediria añadir un nuevo usuario al sistema
-
-    El codigo que me habiais pedido era mas complejo y no vi el ultimo endpoint hasta hoy por la mañana revisando lo que havia entregado...
-    
-    */
-    return {};
   }
 }

@@ -6,10 +6,18 @@ import { BlogController } from './blog/blog.controller';
 import { StorageService } from './storage/storage.service';
 import { UsersService } from './users/users.service';
 import { CommentsService } from './comments/comments.service';
+import { StorageModule } from './storage/storage.module';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
-  imports: [],
+  imports: [StorageModule, BlogModule],
   controllers: [AppController, BlogController],
-  providers: [AppService, BlogService, StorageService, UsersService, CommentsService],
+  providers: [
+    AppService,
+    BlogService,
+    StorageService,
+    UsersService,
+    CommentsService,
+  ],
 })
 export class AppModule {}
