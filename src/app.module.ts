@@ -8,9 +8,10 @@ import { UsersService } from './users/users.service';
 import { CommentsService } from './comments/comments.service';
 import { StorageModule } from './storage/storage.module';
 import { BlogModule } from './blog/blog.module';
+import { ArticleModule } from './article/article.module';
 
 @Module({
-  imports: [StorageModule, BlogModule],
+  imports: [StorageModule, BlogModule, ArticleModule],
   controllers: [AppController, BlogController],
   providers: [
     AppService,

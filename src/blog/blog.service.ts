@@ -8,7 +8,12 @@ export class BlogService {
     const data = this.storageService.getPosts();
     return data;
   }
-  getPost(postId: number): object {
+  getPost(postId: number): {
+    userId: number;
+    id: number;
+    title: string;
+    body: string;
+  } {
     // TODO Aqui uso la comparacion doble pero se tendria que usar la triple
     const data = this.storageService.getPosts();
     const returnPost = data.find((post) => post.id == postId);
