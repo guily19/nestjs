@@ -77,6 +77,11 @@ export class BlogService {
     // Se crearia un objeto final con toda la informacion i se enviaria al controller
     Seguramente esta no es la manera mas limpia de acerlo ya que cada servicio tiene que enviar los datos que se le piden y no tiene que ser
     responsabilidad del servicio Blog crear un nuevo objeto con la informacion total
+
+    Este mismo servicio padre reciviria las peticiones de blog, i pediria a los sercicios correspondientes:
+     el usuario existe? si es asi enviaria el post al servicio post para que lo tratara, si no devolveria error o pediria añadir un nuevo usuario al sistema
+
+    El codigo que me habiais pedido era mas complejo y no vi el ultimo endpoint hasta hoy por la mañana revisando lo que havia entregado...
     
     */
     return {};
